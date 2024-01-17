@@ -1,15 +1,19 @@
-package odas.sterencd.odasprojekt.utils;
+package odas.sterencd.odasprojekt.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import odas.sterencd.odasprojekt.models.Role;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
+public class RegisterRequest {
+    private String name;
     private String email;
     private String password;
+    private Role role;
+    private boolean mfaEnabled;
 }

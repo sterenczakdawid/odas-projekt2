@@ -1,4 +1,4 @@
-package odas.sterencd.odasprojekt.utils;
+package odas.sterencd.odasprojekt.dtos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

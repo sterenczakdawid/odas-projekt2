@@ -6,18 +6,14 @@ import odas.sterencd.odasprojekt.dtos.VerificationRequest;
 import odas.sterencd.odasprojekt.models.Role;
 import odas.sterencd.odasprojekt.models.User;
 import odas.sterencd.odasprojekt.repositories.UserRepository;
-import odas.sterencd.odasprojekt.utils.AuthenticationRequest;
-import odas.sterencd.odasprojekt.utils.AuthenticationResponse;
-import odas.sterencd.odasprojekt.utils.RegisterRequest;
+import odas.sterencd.odasprojekt.dtos.AuthenticationRequest;
+import odas.sterencd.odasprojekt.dtos.AuthenticationResponse;
+import odas.sterencd.odasprojekt.dtos.RegisterRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
