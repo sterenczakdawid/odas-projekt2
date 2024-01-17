@@ -1,11 +1,13 @@
 package odas.sterencd.odasprojekt.controllers;
 
 import lombok.RequiredArgsConstructor;
+import odas.sterencd.odasprojekt.dtos.VerificationRequest;
 import odas.sterencd.odasprojekt.services.AuthenticationService;
 import odas.sterencd.odasprojekt.utils.AuthenticationRequest;
 import odas.sterencd.odasprojekt.utils.AuthenticationResponse;
 import odas.sterencd.odasprojekt.utils.RegisterRequest;
 import odas.sterencd.odasprojekt.utils.ServiceResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,12 +20,21 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ServiceResponse<AuthenticationResponse> register(@RequestBody RegisterRequest request){
-        return new ServiceResponse<>(this.authenticationService.register(request),true,"User successfully registered");
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request){
+        var response = authenticationService.register(request);
+        if(request.isMfaEnabled()) {
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.accepted().build();
 
     }
     @PostMapping("/authenticate")
-    public ServiceResponse<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){
-        return new ServiceResponse<>(this.authenticationService.authenticate(request),true,"User successfully authenticated");
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){
+        return ResponseEntity.ok(authenticationService.authenticate(request));
+    }
+
+    @PostMapping("/verify")
+    public ResponseEntity<?> verifyCode(@RequestBody VerificationRequest verificationRequest) {
+        return ResponseEntity.ok(authenticationService.verifyCode(verificationRequest));
     }
 }
