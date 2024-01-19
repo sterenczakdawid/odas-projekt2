@@ -9,9 +9,11 @@ import dev.samstevens.totp.secret.DefaultSecretGenerator;
 import dev.samstevens.totp.time.SystemTimeProvider;
 import dev.samstevens.totp.time.TimeProvider;
 import dev.samstevens.totp.util.Utils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class TwoFactorAuthenticationService {
     public String generateNewSecret() {
         return new DefaultSecretGenerator().generate();
@@ -22,7 +24,7 @@ public class TwoFactorAuthenticationService {
                 .label("sterencd_odas_project")
                 .secret(secret)
                 .issuer("sterencd")
-                .algorithm(HashingAlgorithm.SHA256)
+                .algorithm(HashingAlgorithm.SHA1)
                 .digits(6)
                 .period(30)
                 .build();
@@ -33,6 +35,7 @@ public class TwoFactorAuthenticationService {
             imageData = generator.generate(data);
         } catch (QrGenerationException e) {
             e.printStackTrace();
+            log.error("Error while generating QR-Code");
         }
 
         return Utils.getDataUriForImage(imageData, generator.getImageMimeType());

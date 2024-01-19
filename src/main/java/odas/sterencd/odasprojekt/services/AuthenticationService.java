@@ -81,7 +81,7 @@ public class AuthenticationService {
     private UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         logger.info("loadujebyusername");
         if( loginAttemptService.isBlocked()){
-            throw new RuntimeException("IP blocked wait 2 day to try again you bad hacker XD");
+            throw new RuntimeException("IP blocked for a while lmao");
         }
         return userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Incorrect authorization data"));
     }
@@ -90,7 +90,7 @@ public class AuthenticationService {
         User user = userRepository
                 .findByEmail(verificationRequest.getEmail())
                 .orElseThrow(() -> new EntityNotFoundException(
-                        String.format("No user found with %S", verificationRequest.getEmail())
+                        String.format("No user found with email %S", verificationRequest.getEmail())
                 ));
         if(tfaService.isOtpNotValid(user.getSecret(), verificationRequest.getCode())) {
             throw new BadCredentialsException("Code is not correct");
