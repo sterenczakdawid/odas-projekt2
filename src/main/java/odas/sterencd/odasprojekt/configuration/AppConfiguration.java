@@ -2,6 +2,7 @@ package odas.sterencd.odasprojekt.configuration;
 
 import lombok.RequiredArgsConstructor;
 import odas.sterencd.odasprojekt.repositories.UserRepository;
+import odas.sterencd.odasprojekt.utils.bruteforce.AuthenticationFailureListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,7 +35,11 @@ public class AppConfiguration {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{
-        return config.getAuthenticationManager();
+        try {
+            return  config.getAuthenticationManager();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Bean

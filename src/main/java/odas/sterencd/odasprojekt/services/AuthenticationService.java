@@ -9,20 +9,29 @@ import odas.sterencd.odasprojekt.repositories.UserRepository;
 import odas.sterencd.odasprojekt.dtos.AuthenticationRequest;
 import odas.sterencd.odasprojekt.dtos.AuthenticationResponse;
 import odas.sterencd.odasprojekt.dtos.RegisterRequest;
+import odas.sterencd.odasprojekt.utils.bruteforce.AuthenticationFailureListener;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepository userRepository;
+    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final TwoFactorAuthenticationService tfaService;
+    private final LoginAttemptService loginAttemptService;
+
+    private final Logger logger = LoggerFactory.getLogger(AuthenticationFailureListener.class);
 
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
@@ -47,10 +56,15 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        logger.info("before authenticate" + request.getEmail() + request.getPassword());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword())
         );
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        logger.info("after authenticate");
+
+//        User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        User user = (User) loadUserByUsername(request.getEmail());
+
         if(user.isMfaEnabled()) {
             return AuthenticationResponse.builder()
                     .accessToken("")
@@ -62,6 +76,14 @@ public class AuthenticationService {
                 .accessToken(jwtToken)
                 .mfaEnabled(false)
                 .build();
+    }
+
+    private UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        logger.info("loadujebyusername");
+        if( loginAttemptService.isBlocked()){
+            throw new RuntimeException("IP blocked wait 2 day to try again you bad hacker XD");
+        }
+        return userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Incorrect authorization data"));
     }
 
     public AuthenticationResponse verifyCode(VerificationRequest verificationRequest) {
