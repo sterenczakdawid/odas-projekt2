@@ -3,13 +3,15 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { MainComponent } from './pages/main/main.component';
 import { authGuard } from './core/guards/auth.guard';
+import { AddNoteComponent } from './pages/add-note/add-note.component';
+import { HomeComponent } from './pages/home/home.component';
+import { NoteDetailsComponent } from './pages/note-details/note-details.component';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
     component: MainComponent,
-    canActivate: [authGuard],
   },
   {
     path: 'login',
@@ -18,5 +20,18 @@ export const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
+  },
+  {
+    path: 'add',
+    component: AddNoteComponent,
+  },
+  {
+    path: 'details/:id',
+    component: NoteDetailsComponent,
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [authGuard],
   },
 ];

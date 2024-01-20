@@ -1,0 +1,41 @@
+lol
+<form [formGroup]="form" class="form" (ngSubmit)="handleSubmit()">
+  <mat-form-field>
+    <input matInput formControlName="title" placeholder="Title">
+    <!-- <mat-error *ngIf="form.get('title')!.hasError('required')">Title is required</mat-error>
+    <mat-error *ngIf="form.get('title')!.hasError('minlength')">Title must be at least 1 character long</mat-error>
+    <mat-error *ngIf="form.get('title')!.hasError('maxlength')">Title cannot exceed 255 characters</mat-error> -->
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea matInput formControlName="content" placeholder="Content"></textarea>
+    <!-- <mat-error *ngIf="form.get('text')!.hasError('required')">Text is required</mat-error>
+    <mat-error *ngIf="form.get('text')?.hasError('minlength')">Text must be at least 1 character long</mat-error>
+    <mat-error *ngIf="form.get('text')!.hasError('maxlength')">Text cannot exceed 4096 characters</mat-error>
+    <mat-error *ngIf="form.get('text')!.hasError('pattern')">Invalid text format</mat-error> -->
+  </mat-form-field>
+
+  <mat-checkbox formControlName="isEncrypted">Is Encrypted</mat-checkbox>
+
+  <mat-checkbox formControlName="isPublic">Is Public</mat-checkbox>
+
+  <mat-form-field>
+    <input matInput formControlName="password" placeholder="Password" type="password">
+  </mat-form-field>
+
+  <button mat-stroked-button type="submit">
+    Submit
+  </button>
+</form>
+
+<div class="preview">
+  <h2>Preview</h2>
+  @if(form.get('text')?.valid){
+  <div [innerHTML]="form.get('text')?.value">
+
+  </div>
+  }@else {
+  Text jest pusty lub zawiera niedozwolone znaki
+  }
+
+</div>

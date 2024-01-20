@@ -91,6 +91,11 @@
 			<artifactId>guava</artifactId>
 			<version>32.1.2-jre</version>
 		</dependency>
+		<dependency>
+			<groupId>org.commonmark</groupId>
+			<artifactId>commonmark</artifactId>
+			<version>0.21.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

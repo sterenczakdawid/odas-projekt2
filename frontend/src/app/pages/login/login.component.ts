@@ -29,7 +29,7 @@ export class LoginComponent {
         this.authResponse = response;
         if (!this.authResponse.mfaEnabled) {
           localStorage.setItem('token', response.accessToken as string);
-          // this.router.navigate(['welcome']);
+          this.router.navigate(['home']);
         }
       },
     });
@@ -43,7 +43,7 @@ export class LoginComponent {
     this.authService.verifyCode(verifyRequest).subscribe({
       next: (response) => {
         localStorage.setItem('token', response.accessToken as string);
-        this.router.navigate(['']);
+        this.router.navigate(['home']);
       },
     });
   }

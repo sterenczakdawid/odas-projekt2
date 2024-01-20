@@ -1,11 +1,18 @@
 package odas.sterencd.odasprojekt.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Note {
 
     @Id
@@ -19,6 +26,7 @@ public class Note {
     private String content;
 
     @Column(name = "iv")
+    @JsonIgnore
     private byte[] iv;
 
     @Column(name = "is_public")

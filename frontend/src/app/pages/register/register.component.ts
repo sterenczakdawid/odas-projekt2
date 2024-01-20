@@ -54,7 +54,7 @@ export class RegisterComponent {
           'Account created successfully\nYou will be redirected to the Welcome page in 3 seconds';
         setTimeout(() => {
           localStorage.setItem('token', response.accessToken as string);
-          this.router.navigate(['main']);
+          this.router.navigate(['home']);
         }, 3000);
       },
     });
