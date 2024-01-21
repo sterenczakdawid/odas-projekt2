@@ -1,8 +1,11 @@
 package odas.sterencd.odasprojekt.configuration;
 
 import lombok.RequiredArgsConstructor;
+import odas.sterencd.odasprojekt.dtos.RegisterRequest;
 import odas.sterencd.odasprojekt.repositories.UserRepository;
+import odas.sterencd.odasprojekt.services.AuthenticationService;
 import odas.sterencd.odasprojekt.utils.bruteforce.AuthenticationFailureListener;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +16,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import static odas.sterencd.odasprojekt.models.Role.ADMIN;
 
 @Configuration
 @RequiredArgsConstructor
@@ -46,4 +51,19 @@ public class AppConfiguration {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    CommandLineRunner commandLineRunner(AuthenticationService service) {
+        return args -> {
+            var admin = RegisterRequest.builder()
+                    .name("admin")
+                    .email("admin@admin.pl")
+                    .password("admin123")
+                    .role(ADMIN)
+                    .mfaEnabled(false)
+                    .build();
+            service.register(admin);
+        };
+    }
+
 }

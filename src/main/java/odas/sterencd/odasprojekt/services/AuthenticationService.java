@@ -9,7 +9,6 @@ import odas.sterencd.odasprojekt.repositories.UserRepository;
 import odas.sterencd.odasprojekt.dtos.AuthenticationRequest;
 import odas.sterencd.odasprojekt.dtos.AuthenticationResponse;
 import odas.sterencd.odasprojekt.dtos.RegisterRequest;
-import odas.sterencd.odasprojekt.utils.bruteforce.AuthenticationFailureListener;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +21,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepository userRepository;
-    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -53,7 +51,7 @@ public class AuthenticationService {
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword())
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
 
 //        User user = userRepository.findByEmail(request.getEmail()).orElseThrow();

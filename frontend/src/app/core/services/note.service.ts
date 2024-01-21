@@ -10,6 +10,14 @@ import { environment } from '../../../environments/environment.development';
 export class NoteService {
   private http = inject(HttpClient);
 
+  getPublicNotes(): Observable<Note[]> {
+    return this.http.get<Note[]>(`${environment.apiUrl}api/v1/notes/public`);
+  }
+
+  getUsersNotes(): Observable<Note[]> {
+    return this.http.get<Note[]>(`${environment.apiUrl}api/v1/notes/my`);
+  }
+
   getDetailedNote(id: number): Observable<Note> {
     return this.http.get<Note>(
       `${environment.apiUrl}api/v1/notes/details/${id}`

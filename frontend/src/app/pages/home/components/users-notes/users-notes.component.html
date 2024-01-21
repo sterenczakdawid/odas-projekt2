@@ -1,0 +1,5 @@
+@if (usersNotes$ | async;as usersNotes) {
+@for (note of usersNotes; track $index) {
+<p>{{note.title}} - {{note.isEncrypted}} - {{note.isPublic}} </p>
+}
+}

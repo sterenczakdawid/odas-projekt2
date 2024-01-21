@@ -27,15 +27,3 @@ lol
     Submit
   </button>
 </form>
-
-<div class="preview">
-  <h2>Preview</h2>
-  @if(form.get('text')?.valid){
-  <div [innerHTML]="form.get('text')?.value">
-
-  </div>
-  }@else {
-  Text jest pusty lub zawiera niedozwolone znaki
-  }
-
-</div>
