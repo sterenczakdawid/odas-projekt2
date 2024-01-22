@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -34,6 +34,7 @@ import { NoteService } from '../../core/services/note.service';
 })
 export class NoteDetailsComponent {
   note$!: Observable<Note>;
+  submittedPassword$ = new BehaviorSubject<string>(null);
 
   password = this.fb.control('', [Validators.required]);
 
@@ -44,9 +45,28 @@ export class NoteDetailsComponent {
   ) {}
 
   ngOnInit(): void {
-    this.note$ = this.route.params.pipe(
-      map((params) => params['id'] as number),
-      switchMap((id) => this.noteService.getDetailedNote(id))
+    this.note$ = combineLatest([
+      this.route.params,
+      this.submittedPassword$,
+    ]).pipe(
+      map(([params, password]) => ({
+        id: parseInt(params['id'] as string, 10),
+        password,
+      })),
+      switchMap((data) => this.noteService.getDetailedNote(data))
     );
+    this.note$.subscribe(
+      (note) => {
+        console.log('Otrzymano notatkę:', note);
+      },
+      (error) => {
+        console.error('Błąd podczas pobierania notatki:', error);
+      }
+    );
+  }
+
+  handleSubmit(): void {
+    if (this.password.invalid) return;
+    this.submittedPassword$.next(this.password.value);
   }
 }

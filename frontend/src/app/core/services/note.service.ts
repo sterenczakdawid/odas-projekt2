@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Note, NoteDto } from '../interfaces/note.interface';
+import { Note, NoteDto, NoteGetDto } from '../interfaces/note.interface';
 import { environment } from '../../../environments/environment.development';
 
 @Injectable({
@@ -18,9 +18,9 @@ export class NoteService {
     return this.http.get<Note[]>(`${environment.apiUrl}api/v1/notes/my`);
   }
 
-  getDetailedNote(id: number): Observable<Note> {
-    return this.http.get<Note>(
-      `${environment.apiUrl}api/v1/notes/details/${id}`
+  getDetailedNote(note: NoteGetDto): Observable<Note> {
+    return this.http.post<Note>(
+      `${environment.apiUrl}api/v1/notes/details`, note
     );
   }
 

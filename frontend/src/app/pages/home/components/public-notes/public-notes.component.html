@@ -1,5 +1,6 @@
 @if (publicNotes$ | async;as publicNotes) {
 @for (note of publicNotes; track $index) {
-<p>{{note.title}}</p>
+<a [routerLink]="linkToDetails + note.id">{{note.title}}</a>
+<br />
 }
 }

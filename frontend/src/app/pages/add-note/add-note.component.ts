@@ -51,6 +51,7 @@ export class AddNoteComponent {
   ) {}
 
   handleSubmit(): void {
+    console.log(this.form.value);
     // if (this.form.invalid) return;
     const note: NoteDto = this.form.value as NoteDto;
     // this.isSubmitDisabled = true;

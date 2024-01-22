@@ -39,11 +39,10 @@ public class NoteController {
         return noteService.addNote(noteDto, username);
     }
 
-    @GetMapping("/details/{id}")
+    @PostMapping("/details")
     public Note noteDetails(@RequestBody NoteGetDTO noteGetDto) throws Exception {
         Note note = noteService.getNote(noteGetDto.getId());
-
-        if(noteGetDto.getPassword()!=null){
+        if(noteGetDto.getPassword() != null){
             return noteService.getDecryptedNote(note.getId(),noteGetDto.getPassword());
         } else {
             return note;

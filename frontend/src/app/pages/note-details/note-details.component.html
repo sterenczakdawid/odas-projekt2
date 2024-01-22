@@ -3,9 +3,26 @@
   <mat-card-header>
     <mat-card-title>{{ note.title }}</mat-card-title>
     <mat-card-subtitle>{{ note.username }}</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
+  </mat-card-header> 
+@if( !note.encrypted) {
+ <mat-card-content>
     <div [innerHTML]="note.content"></div>
-  </mat-card-content>
-</mat-card>
-}
+  </mat-card-content> 
+} @else { 
+ <mat-card-content>
+    <div class="content">
+      <mat-form-field>
+        <input matInput [formControl]="password" type="password" />
+        <mat-error>
+          Password is required
+        </mat-error>
+      </mat-form-field>
+
+      <button [disabled]="password.invalid" mat-stroked-button (click)="handleSubmit()">
+        Submit
+      </button>
+    </div>
+  </mat-card-content> 
+ }
+ </mat-card> 
+ }
