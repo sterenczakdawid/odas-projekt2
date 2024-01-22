@@ -1,5 +1,6 @@
 package odas.sterencd.odasprojekt.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import odas.sterencd.odasprojekt.dtos.VerificationRequest;
 import odas.sterencd.odasprojekt.services.AuthenticationService;
@@ -17,7 +18,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest request){
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request){
         var response = authenticationService.register(request);
         if(request.isMfaEnabled()) {
             return ResponseEntity.ok(response);
