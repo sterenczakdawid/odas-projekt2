@@ -9,6 +9,7 @@ import odas.sterencd.odasprojekt.repositories.UserRepository;
 import odas.sterencd.odasprojekt.dtos.AuthenticationRequest;
 import odas.sterencd.odasprojekt.dtos.AuthenticationResponse;
 import odas.sterencd.odasprojekt.dtos.RegisterRequest;
+import odas.sterencd.odasprojekt.utils.Delay;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,6 +43,7 @@ public class AuthenticationService {
         }
         userRepository.save(user);
         String jwtToken = jwtService.generateToken(user);
+        Delay.delay();
         return AuthenticationResponse.builder()
                 .secretImageUri(tfaService.generateQrCodeImageUri(user.getSecret()))
                 .accessToken(jwtToken)
@@ -54,9 +56,8 @@ public class AuthenticationService {
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
 
-//        User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         User user = (User) loadUserByUsername(request.getEmail());
-
+        Delay.delay();
         if(user.isMfaEnabled()) {
             return AuthenticationResponse.builder()
                     .accessToken("")
@@ -87,6 +88,7 @@ public class AuthenticationService {
             throw new BadCredentialsException("Code is not correct");
         }
         var jwtToken = jwtService.generateToken(user);
+        Delay.delay();
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .mfaEnabled(user.isMfaEnabled())

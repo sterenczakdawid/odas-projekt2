@@ -79,7 +79,7 @@ public class NoteService {
     public Note getDecryptedNote(Integer id, String password){
         Note note =  getNote(id);
         if(password ==null || note.getIv().length ==0){
-            throw new IllegalStateException("No enrypted note");
+            throw new IllegalStateException("No encrypted note");
         }
         try{
             String encryptedText =note.getContent();
@@ -90,13 +90,10 @@ public class NoteService {
 
             note.setContent((new String(plainText)));
             note.setEncrypted(false);
-            log.info("notatka wysylana na front: " + note + "i jej wartosc isEncrypted: " + note.isEncrypted());
             return note;
         } catch (Exception e) {
-            log.error("An error occurred during encryption/decryption.", e);
             throw new RuntimeException("An error occurred during encryption/decryption.", e);
         }
-//        return note;
     }
 
     private SecretKey getKey(String password) throws Exception{
