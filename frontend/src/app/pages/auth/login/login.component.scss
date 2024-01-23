@@ -1,8 +1,16 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
 .container {
   background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
   width: 300px;
 }
 
@@ -10,11 +18,14 @@ h2 {
   text-align: center;
   color: #333333;
 }
+
 form {
   text-align: center;
 }
+
 .form-group {
   margin-bottom: 15px;
+  text-align: center;
 }
 
 label {
@@ -26,7 +37,7 @@ label {
 
 input[type="text"],
 input[type="password"] {
-  width: 93%;
+  width: 90%;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #cccccc;
@@ -35,27 +46,18 @@ input[type="password"] {
 
 button {
   width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: #ffffff;
-  font-size: 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  margin-bottom: 20px;
 }
 
-a {
-  margin-top: 10px;
+label.code__label {
+  text-align: center;
 }
 
-button:hover {
-  background-color: #0056b3;
-}
-
-.button-disabled {
-  background-color: #cccccc;
-  color: #777777;
-  cursor: not-allowed;
-  opacity: 0.6;
-  pointer-events: none;
+.error {
+  text-align: center;
+  background-color: rgb(210, 85, 85);
+  color: #fff;
+  margin: 10px auto;
+  border-radius: 8px;
+  padding: 5px;
 }

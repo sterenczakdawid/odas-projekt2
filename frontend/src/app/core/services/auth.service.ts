@@ -6,6 +6,8 @@ import {
   AuthenticationRequest,
   VerificationRequest,
 } from '../interfaces/auth.interface';
+import { environment } from '../../../environments/environment.development';
+import { ENDPOINTS } from '../constants/api.const';
 
 @Injectable({
   providedIn: 'root',
@@ -18,21 +20,21 @@ export class AuthService {
 
   register(registerRequest: RegisterRequest) {
     return this.http.post<AuthenticationResponse>(
-      `${this.baseUrl}/register`,
+      `${environment.apiUrl}${ENDPOINTS.REGISTER}`,
       registerRequest
     );
   }
 
   login(authRequest: AuthenticationRequest) {
     return this.http.post<AuthenticationResponse>(
-      `${this.baseUrl}/authenticate`,
+      `${environment.apiUrl}${ENDPOINTS.LOGIN}`,
       authRequest
     );
   }
 
   verifyCode(verificationRequest: VerificationRequest) {
     return this.http.post<AuthenticationResponse>(
-      `${this.baseUrl}/verify`,
+      `${environment.apiUrl}${ENDPOINTS.VERIFY}`,
       verificationRequest
     );
   }

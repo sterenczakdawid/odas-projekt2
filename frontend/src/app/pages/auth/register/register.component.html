@@ -1,0 +1,60 @@
+<div class="container" *ngIf="!authResponse.mfaEnabled">
+  <div class="success-message-panel" *ngIf="message">
+    <div class="success-message">{{message}}</div>
+  </div>
+
+  <h2>Rejestracja</h2>
+  <form (ngSubmit)="registerUser()" [formGroup]="registerForm">
+    <div class="form-group">
+      <label for="name">Imię</label>
+      <input id="name" name="name"type="text" formControlName="name">
+      <div class="error" *ngIf="registerForm.get('name').touched && registerForm.get('name').hasError('required')">Imię jest wymagane</div>
+      <div class="error" *ngIf="registerForm.get('name').hasError('minlength') || registerForm.get('name').hasError('maxlength')">Imię musi mieć 4-32 znaki</div>
+      <div class="error" *ngIf="registerForm.get('name').hasError('pattern')">Imię nieprawidłowe - tylko liczby i litery</div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="text" formControlName="email">
+      <div class="error" *ngIf="registerForm.get('email').touched && registerForm.get('email').hasError('required')">Email jest wymagany</div>
+      <div class="error" *ngIf="registerForm.get('email').hasError('minlength') || registerForm.get('email').hasError('maxlength')">Email musi mieć 3-64 znaki</div>
+      <div class="error" *ngIf="registerForm.get('email').hasError('pattern')">Email nieprawidłowy</div>
+    </div>
+    <div class="form-group">
+      <label for="password">Hasło</label>
+      <input id="password" name="password" type="password" formControlName="password">
+      <div class="error" *ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('required')">Hasło jest wymagane</div>
+      <div class="error" *ngIf="registerForm.get('password').hasError('minlength') || registerForm.get('password').hasError('maxlength')">Hasło musi mieć 8-32 znaki</div>
+      <div class="error" *ngIf="registerForm.get('password').hasError('pattern')">Hasło nie spełnia podstawowych wymagań - mała, duża litera, cyfra, znak specjalny</div>
+    </div>
+      @if (entropy$ | async;as entropy) {
+        <div class="strength">
+          <label>Siła hasła = {{entropy}}</label>
+          <span [ngClass]="entropy > 3 ? 'strong' : 'weak'">{{entropy > 3 ? 'silne' : 'słabe'}}</span>
+        </div>
+      }
+    <div class="form-group">
+      <input id="tfa" name="tfa" type="checkbox" formControlName="mfaEnabled">
+      <label class="tfa_label" for="tfa">Włącz weryfikację dwuetapową</label>
+    </div>
+    <button type="submit" mat-raised-button color="primary" [disabled]="(registerForm.invalid || (entropy$ | async) <= 3)">Zarejestruj się</button>
+
+    <a routerLink="/login">Zaloguj się</a>
+  </form>
+</div>
+
+<div class="container" *ngIf="authResponse.mfaEnabled">
+
+  <div class="success-message-panel" *ngIf="message">
+    <div class="success-message">{{message}}</div>
+  </div>
+
+  <h2>Ustaw weyfikację dwuetapową</h2>
+  <div class="qr-code">
+    <img [src]="authResponse.secretImageUri" alt="QR Code">
+  </div>
+  <div class="form-group">
+    <label for="validationCode">Wprowadź 6 znakowy kod z aplikacji</label>
+    <input type="text" id="validationCode" name="validationCode" [formControl]="tfaForm">
+  </div>
+  <button type="button" mat-raised-button color="primary" [disabled]="tfaForm.invalid" (click)="verifyTfa()">Wyślij kod</button>
+</div>

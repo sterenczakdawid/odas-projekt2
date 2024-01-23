@@ -1,0 +1,35 @@
+<div class="container" *ngIf="!authResponse.mfaEnabled">
+  <h2>Logowanie</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="authenticate()">
+    <div class="form-group">
+      <label for="username">Email</label>
+      <input type="text" id="username" name="username" formControlName="email">
+      <div class="error" *ngIf="loginForm.get('email').touched && loginForm.get('email').hasError('required')">Email jest wymagany</div>
+      <div class="error" *ngIf="loginForm.get('email').hasError('minlength') || loginForm.get('email').hasError('maxlength')">Email musi mieć 3-64 znaki</div>
+      <div class="error" *ngIf="loginForm.get('email').hasError('pattern')">Email nieprawidłowy</div>
+    </div>
+    <div class="form-group">
+      <label for="password">Hasło</label>
+      <input type="password" id="password" name="password" formControlName="password">
+      <div class="error" *ngIf="loginForm.get('password').touched && loginForm.get('password').hasError('required')">Hasło jest wymagane</div>
+      <div class="error" *ngIf="loginForm.get('password').hasError('minlength') || loginForm.get('password').hasError('maxlength')">Hasło musi miec 8-32 znaki</div>
+      <div class="error" *ngIf="loginForm.get('password').hasError('pattern')">Hasło nie spełnia podstawowych wymagań - mała, duża litera, cyfra, znak specjalny</div>
+    </div>
+    <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Zaloguj</button>
+    <a routerLink="/register">Zarejestruj się</a>
+  </form>
+</div>
+
+<div class="container" *ngIf="authResponse.mfaEnabled">
+  <h2>Weryfikacja dwuetapowa</h2>
+  <div class="form-group">
+    <label class="code__label" for="validationCode">Wprowadź 6 znakowy kod z aplikacji</label>
+    <input [formControl]="tfaForm" type="text" id="validationCode" name="validationCode">
+    <div class="error" *ngIf="tfaForm.touched && tfaForm.hasError('required')">Kod jest wymagany</div>
+    <div class="error" *ngIf="tfaForm.hasError('minlength') || tfaForm.hasError('maxlength')">Kod musi mieć dokładnie 6
+      znaków</div>
+    <div class="error" *ngIf="tfaForm.hasError('pattern')">Kod musi zawierać tylko cyfry!</div>
+  </div>
+  <button mat-raised-button color="primary" type="button" (click)="verifyCode()" [disabled]="tfaForm.invalid">Wyślij
+    kod</button>
+</div>

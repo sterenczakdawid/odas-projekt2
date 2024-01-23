@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Note, NoteDto, NoteGetDto } from '../interfaces/note.interface';
 import { environment } from '../../../environments/environment.development';
+import { ENDPOINTS } from '../constants/api.const';
 
 @Injectable({
   providedIn: 'root',
@@ -11,20 +12,20 @@ export class NoteService {
   private http = inject(HttpClient);
 
   getPublicNotes(): Observable<Note[]> {
-    return this.http.get<Note[]>(`${environment.apiUrl}api/v1/notes/public`);
+    return this.http.get<Note[]>(`${environment.apiUrl}${ENDPOINTS.PUBLIC_NOTES}`);
   }
 
   getUsersNotes(): Observable<Note[]> {
-    return this.http.get<Note[]>(`${environment.apiUrl}api/v1/notes/my`);
+    return this.http.get<Note[]>(`${environment.apiUrl}${ENDPOINTS.USER_NOTES}`);
   }
 
   getDetailedNote(note: NoteGetDto): Observable<Note> {
     return this.http.post<Note>(
-      `${environment.apiUrl}api/v1/notes/details`, note
+      `${environment.apiUrl}${ENDPOINTS.NOTE_DETAILS}`, note
     );
   }
 
   saveNote(data: NoteDto): Observable<Note> {
-    return this.http.post<Note>(`${environment.apiUrl}api/v1/notes/add`, data);
+    return this.http.post<Note>(`${environment.apiUrl}${ENDPOINTS.ADD_NOTE}`, data);
   }
 }

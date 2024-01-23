@@ -15,7 +15,7 @@ public class PasswordValidator implements ConstraintValidator<PasswordValid, Str
 
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {
-        log.info("Sprawdzam");
+//        log.info("Sprawdzam");
 //        Musi zawierać co najmniej jedną cyfrę ((?=.*[0-9])).
 //        Musi zawierać co najmniej jedną małą literę ((?=.*[a-z])).
 //        Musi zawierać co najmniej jedną dużą literę ((?=.*[A-Z])).

@@ -5,7 +5,7 @@ export interface AuthenticationRequest {
 
 export interface AuthenticationResponse {
   accessToken?: string;
-  mfaEnabled?: string;
+  mfaEnabled?: boolean;
   secretImageUri?: string;
 }
 
@@ -14,7 +14,7 @@ export interface RegisterRequest {
   email?: string;
   password?: string;
   role?: string;
-  mfaEnabled?: string;
+  mfaEnabled?: boolean;
 }
 
 export interface VerificationRequest {

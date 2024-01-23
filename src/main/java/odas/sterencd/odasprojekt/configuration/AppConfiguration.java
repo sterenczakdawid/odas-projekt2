@@ -20,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static odas.sterencd.odasprojekt.models.Role.ADMIN;
+import static odas.sterencd.odasprojekt.models.Role.USER;
 
 @Configuration
 @RequiredArgsConstructor
@@ -65,6 +66,15 @@ public class AppConfiguration {
                     .mfaEnabled(false)
                     .build();
             authenticationService.register(adminUser);
+
+            RegisterRequest user = RegisterRequest.builder()
+                    .name("Dawid")
+                    .email("dawid@mail.pl")
+                    .password("Dawid123!")
+                    .role(USER)
+                    .mfaEnabled(true)
+                    .build();
+            authenticationService.register(user);
 
             NoteDTO note = NoteDTO.builder().title("Przykładowa notatka publiczna").content("## Notatka publiczna").isEncrypted(false).isPublic(true).build();
             noteService.addNote(note, adminUser.getEmail());

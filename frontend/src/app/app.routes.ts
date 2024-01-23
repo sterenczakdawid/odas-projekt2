@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
+import { LoginComponent } from './pages/auth/login/login.component';
+import { RegisterComponent } from './pages/auth/register/register.component';
 import { MainComponent } from './pages/main/main.component';
 import { authGuard } from './core/guards/auth.guard';
 import { AddNoteComponent } from './pages/add-note/add-note.component';
