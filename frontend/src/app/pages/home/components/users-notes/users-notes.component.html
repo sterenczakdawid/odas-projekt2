@@ -1,6 +1,6 @@
 @if (usersNotes$ | async;as usersNotes) {
 @for (note of usersNotes; track $index) {
-<a [routerLink]="linkToDetails + note.id">{{note.title}} --- {{note.encrypted}}</a>
+<a [routerLink]="linkToDetails + note.id">{{note.title}} {{note.encrypted ? '(szyfrowana)' : '(publiczna)'}}</a>
 <br />
 }
 }

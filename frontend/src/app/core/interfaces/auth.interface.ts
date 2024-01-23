@@ -21,3 +21,9 @@ export interface VerificationRequest {
   email?: string;
   code?: string;
 }
+
+export interface UserToken {
+  sub: string;
+  iat: number;
+  exp: number;
+}

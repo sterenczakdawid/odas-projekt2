@@ -42,6 +42,11 @@ public class NoteController {
     @PostMapping("/details")
     public Note noteDetails(@RequestBody NoteGetDTO noteGetDto) throws Exception {
         Note note = noteService.getNote(noteGetDto.getId());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        if(!note.isPublic() && !username.equals(note.getUsername())) {
+            throw new IllegalArgumentException("Nie masz dostępu do tej notatki!");
+        }
         if(noteGetDto.getPassword() != null){
             return noteService.getDecryptedNote(note.getId(),noteGetDto.getPassword());
         } else {

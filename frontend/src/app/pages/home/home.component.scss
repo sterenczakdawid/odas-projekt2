@@ -1,0 +1,17 @@
+.notes {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.button {
+  margin: 10px;
+  width: 200px;
+}

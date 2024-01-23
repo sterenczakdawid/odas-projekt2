@@ -61,7 +61,7 @@ public class AppConfiguration {
             RegisterRequest adminUser = RegisterRequest.builder()
                     .name("admin")
                     .email("admin@admin.pl")
-                    .password("admin123!")
+                    .password("Admin123!")
                     .role(ADMIN)
                     .mfaEnabled(false)
                     .build();

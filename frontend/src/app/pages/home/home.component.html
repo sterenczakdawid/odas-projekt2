@@ -1,7 +1,14 @@
-<button routerLink="/add">Dodaj notatkę</button>
-<button (click)="logout()">Wyloguj się</button>
-<h2>Public notes:</h2>
-<app-public-notes></app-public-notes>
-
-<h2>My notes: </h2>
-<app-users-notes></app-users-notes>
+<div class="buttons">
+  <button mat-raised-button color="primary" routerLink="/add" class="button">Dodaj notatkę</button>
+  <button mat-raised-button color="primary" (click)="logout()" class="button">Wyloguj się</button>
+</div>
+<div class="notes">
+  <div class="public">
+    <h2>Publiczne notatki:</h2>
+    <app-public-notes></app-public-notes>
+  </div>
+  <div class="my">
+    <h2>Moje notatki: </h2>
+    <app-users-notes></app-users-notes>
+  </div>
+</div>

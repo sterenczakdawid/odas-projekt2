@@ -1,28 +1,29 @@
 @if (note$ | async; as note) {
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>{{ note.title }}</mat-card-title>
-    <mat-card-subtitle>{{ note.username }}</mat-card-subtitle>
-  </mat-card-header> 
-@if( !note.encrypted) {
- <mat-card-content>
-    <div [innerHTML]="note.content"></div>
-  </mat-card-content> 
-} @else { 
- <mat-card-content>
-    <div class="content">
-      <mat-form-field>
-        <input matInput [formControl]="password" type="password" />
-        <mat-error>
-          Password is required
-        </mat-error>
-      </mat-form-field>
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ note.title }}</mat-card-title>
+      <mat-card-subtitle>{{ note.username }}</mat-card-subtitle>
+    </mat-card-header>
+    @if( !note.encrypted) {
+    <mat-card-content>
+      <div [innerHTML]="note.content"></div>
+    </mat-card-content>
+    } @else {
+    <mat-card-content>
+      <div class="content">
+        <div class="form-group">
+          <label for="password">Hasło</label>
+          <input [formControl]="password" type="password" />
+          <div class="error" *ngIf="password.touched && password.hasError('required')">Wymagane</div>
+        </div>
 
-      <button [disabled]="password.invalid" mat-stroked-button (click)="handleSubmit()">
-        Submit
-      </button>
-    </div>
-  </mat-card-content> 
- }
- </mat-card> 
- }
+        <button [disabled]="password.invalid" mat-raised-button color="primary" (click)="handleSubmit()">
+          Pokaż notatkę
+        </button>
+      </div>
+    </mat-card-content>
+    }
+  </mat-card>
+</div>
+}

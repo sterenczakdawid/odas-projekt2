@@ -5,9 +5,11 @@ import {
   AuthenticationResponse,
   AuthenticationRequest,
   VerificationRequest,
+  UserToken,
 } from '../interfaces/auth.interface';
 import { environment } from '../../../environments/environment.development';
 import { ENDPOINTS } from '../constants/api.const';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -49,5 +51,10 @@ export class AuthService {
 
   removeToken(): void {
     window.localStorage.removeItem(this.KeyStorage);
+  }
+
+  decodeToken(): UserToken | null {
+    const token = this.token;
+    return token ? jwtDecode(token) : null;
   }
 }

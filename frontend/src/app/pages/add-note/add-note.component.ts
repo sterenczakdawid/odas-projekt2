@@ -26,10 +26,10 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './add-note.component.scss',
 })
 export class AddNoteComponent {
-  form = this.fb.group({
+  addForm = this.fb.group({
     title: [
       '',
-      [Validators.required, Validators.minLength(1), Validators.maxLength(255)],
+      [Validators.required, Validators.minLength(1), Validators.maxLength(64)],
     ],
     content: [
       '',
@@ -51,10 +51,9 @@ export class AddNoteComponent {
   ) {}
 
   handleSubmit(): void {
-    console.log(this.form.value);
-    // if (this.form.invalid) return;
-    const note: NoteDto = this.form.value as NoteDto;
-    // this.isSubmitDisabled = true;
+    console.log(this.addForm.value);
+    if (this.addForm.invalid) return;
+    const note: NoteDto = this.addForm.value as NoteDto;
     this.noteService
       .saveNote(note)
       .pipe(
@@ -67,8 +66,7 @@ export class AddNoteComponent {
         if (note) {
           void this.router.navigateByUrl(`/home`);
         } else {
-          this.form.reset();
-          // this.isSubmitDisabled = false;
+          this.addForm.reset();
         }
       });
   }
