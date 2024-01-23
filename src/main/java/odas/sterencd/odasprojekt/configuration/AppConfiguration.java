@@ -1,9 +1,11 @@
 package odas.sterencd.odasprojekt.configuration;
 
 import lombok.RequiredArgsConstructor;
+import odas.sterencd.odasprojekt.dtos.NoteDTO;
 import odas.sterencd.odasprojekt.dtos.RegisterRequest;
 import odas.sterencd.odasprojekt.repositories.UserRepository;
 import odas.sterencd.odasprojekt.services.AuthenticationService;
+import odas.sterencd.odasprojekt.services.NoteService;
 import odas.sterencd.odasprojekt.utils.bruteforce.AuthenticationFailureListener;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -53,16 +55,23 @@ public class AppConfiguration {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(AuthenticationService service) {
+    CommandLineRunner commandLineRunner(NoteService noteService, AuthenticationService authenticationService) {
         return args -> {
-            var admin = RegisterRequest.builder()
+            RegisterRequest adminUser = RegisterRequest.builder()
                     .name("admin")
                     .email("admin@admin.pl")
-                    .password("admin123")
+                    .password("admin123!")
                     .role(ADMIN)
                     .mfaEnabled(false)
                     .build();
-            service.register(admin);
+            authenticationService.register(adminUser);
+
+            NoteDTO note = NoteDTO.builder().title("Przykładowa notatka publiczna").content("## Notatka publiczna").isEncrypted(false).isPublic(true).build();
+            noteService.addNote(note, adminUser.getEmail());
+            NoteDTO note2 = NoteDTO.builder().title("Szyfrowana").content("*Ta notatka jest zaszyfrowana*").isEncrypted(true).password("123").isPublic(false).build();
+            noteService.addNote(note2, adminUser.getEmail());
+            NoteDTO note3 = NoteDTO.builder().title("Publiczna 2").content("**Druga publiczna**").isEncrypted(false).password("").isPublic(true).build();
+            noteService.addNote(note3, adminUser.getEmail());
         };
     }
 

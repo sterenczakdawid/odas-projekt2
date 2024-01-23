@@ -21,6 +21,10 @@ public class NoteDTO {
 
     private String username;
     private String password;
+
+    @NotNull
     private Boolean isPublic;
+
+    @NotNull
     private Boolean isEncrypted;
 }

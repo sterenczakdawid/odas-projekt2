@@ -88,7 +88,10 @@ public class NoteService {
             byte[] plainText = cipher.doFinal(Base64.getDecoder()
                     .decode(encryptedText));
 
-            note.setContent((new String(plainText)));
+            Node document = parser.parse(new String(plainText));
+            String parsedNote = renderer.render(document);
+
+            note.setContent(parsedNote);
             note.setEncrypted(false);
             return note;
         } catch (Exception e) {

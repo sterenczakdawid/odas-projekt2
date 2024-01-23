@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import odas.sterencd.odasprojekt.models.Role;
+import odas.sterencd.odasprojekt.utils.validators.EmailValid;
+import odas.sterencd.odasprojekt.utils.validators.NameValid;
 import odas.sterencd.odasprojekt.utils.validators.PasswordValid;
 import org.hibernate.validator.constraints.Length;
 
@@ -17,11 +19,12 @@ import org.hibernate.validator.constraints.Length;
 public class RegisterRequest {
     @NotNull
     @NotEmpty
-    @Length(min = 4, max = 32)
+    @NameValid
     private String name;
 
     @NotNull
     @NotEmpty
+    @EmailValid
     private String email;
 
     @NotNull

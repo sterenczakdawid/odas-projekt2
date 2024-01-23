@@ -10,6 +10,8 @@ import lombok.Data;
 @Builder
 public class NoteGetDTO {
     @NotNull
+    @NotEmpty
+    @NotBlank
     private Integer id;
     private String password;
 }
