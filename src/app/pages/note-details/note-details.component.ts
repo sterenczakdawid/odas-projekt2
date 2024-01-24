@@ -57,7 +57,7 @@ export class NoteDetailsComponent {
     );
     this.note$.subscribe(
       (note) => {
-        console.log('Otrzymano notatkę:', note);
+        // console.log('Otrzymano notatkę:', note);
       },
       (error) => {
         console.error('Błąd podczas pobierania notatki:', error);

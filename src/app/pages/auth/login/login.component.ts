@@ -68,7 +68,7 @@ export class LoginComponent {
   ) {}
 
   authenticate() {
-    console.log(this.loginForm.value);
+    // console.log(this.loginForm.value);
     this.authService
       .login(this.loginForm.value as AuthenticationRequest)
       .subscribe({

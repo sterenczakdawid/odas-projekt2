@@ -23,7 +23,7 @@ export class UsersNotesComponent implements OnInit {
     this.usersNotes$ = this.noteService.getUsersNotes();
     this.usersNotes$.subscribe(
       (notes: Note[]) => {
-        console.log('Otrzymano notatki:', notes);
+        // console.log('Otrzymano notatki:', notes);
         // Tutaj możesz przypisać pobrane notatki do odpowiednich zmiennych w komponencie
       },
       (error) => {

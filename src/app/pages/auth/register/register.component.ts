@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   ]);
 
   registerUser() {
-    console.log(this.registerForm.value);
+    // console.log(this.registerForm.value);
     this.message = '';
     this.authService.register(this.registerForm.value as RegisterRequest).subscribe({
       next: (response) => {

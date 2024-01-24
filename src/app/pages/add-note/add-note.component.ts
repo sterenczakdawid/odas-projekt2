@@ -51,7 +51,7 @@ export class AddNoteComponent {
   ) {}
 
   handleSubmit(): void {
-    console.log(this.addForm.value);
+    // console.log(this.addForm.value);
     if (this.addForm.invalid) return;
     const note: NoteDto = this.addForm.value as NoteDto;
     this.noteService
