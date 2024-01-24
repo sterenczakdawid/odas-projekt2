@@ -1,18 +1,18 @@
-version: '3'
+version: "3"
 
 networks:
-    my_network: {}
+  my_network: {}
 
 services:
   postgres:
-    image: postgres
+    image: postgres:latest
     container_name: postgres-container
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
     ports:
-      - "5432:5432"
+      - 5432:5432
     networks:
       - my_network
   spring-app:
@@ -21,9 +21,13 @@ services:
       dockerfile: Dockerfile.spring
     container_name: spring-app-container
     ports:
-      - "8443:8443"
+      - 8443:8443
     depends_on:
       - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-container:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
     networks:
       - my_network
   angular-app:
@@ -32,8 +36,8 @@ services:
       dockerfile: Dockerfile.angular
     container_name: frontend-container
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
     depends_on:
       - spring-app
     networks:
