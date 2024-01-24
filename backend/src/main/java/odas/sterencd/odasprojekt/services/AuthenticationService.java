@@ -73,7 +73,7 @@ public class AuthenticationService {
 
     private UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if( loginAttemptService.isBlocked()){
-            throw new RuntimeException("IP blocked for a while lmao");
+            throw new RuntimeException("IP blocked for a while");
         }
         return userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Incorrect authorization data"));
     }

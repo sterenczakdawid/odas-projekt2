@@ -44,7 +44,7 @@ public class LoginAttemptService {
             attempts = 0;
         }
         attempts++;
-        logger.info("zarejestrowalem probe nr" + attempts);
+        // logger.info("zarejestrowalem probe nr" + attempts);
         attemptsCache.put(address,attempts);
     }
 
