@@ -1,0 +1,15 @@
+# Build Stage
+FROM eclipse-temurin:17-jdk as build
+WORKDIR /app
+COPY . /app
+RUN chmod +x mvnw
+RUN ./mvnw clean install -DskipTests
+
+# Run Stage
+FROM openjdk:23-slim as run
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+
+EXPOSE 8443
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
